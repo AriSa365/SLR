@@ -283,13 +283,8 @@ const SUPABASE_URL = 'https://zyphftinfooqfzuqwwif.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5cGhmdGluZm9vcWZ6dXF3d2lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0OTI0MzMsImV4cCI6MjA5NzA2ODQzM30.G2vVWCxpWNY2JXEDWws07AzjQDI1QAROSDL9V2UWt7g';
 
 
-
-const isConfigured = !!(
-  SUPABASE_URL &&
-  SUPABASE_ANON_KEY &&
-  SUPABASE_URL.startsWith('https://')
-);
-  
+const isConfigured = SUPABASE_URL !== 'https://zyphftinfooqfzuqwwif.supabase.co';
+ 
 let supabase = null;
 
 if (isConfigured) {
