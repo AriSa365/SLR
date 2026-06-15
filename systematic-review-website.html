@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SystematicaHub — Evidence Synthesis Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0f1b2d;
+    --ink-mid: #374457;
+    --ink-soft: #7a8899;
+    --ink-ghost: #b4bec9;
+    --paper: #f5f3ee;
+    --paper-warm: #ede9e0;
+    --paper-card: #ffffff;
+    --accent: #2a5298;
+    --accent-light: #e8eef8;
+    --accent-glow: #4a76c8;
+    --teal: #1a7a6b;
+    --teal-light: #e2f4f1;
+    --amber: #b85c0a;
+    --amber-light: #fdf0e2;
+    --red: #b52a2a;
+    --red-light: #fdeaea;
+    --green: #2d6a2d;
+    --green-light: #eaf4ea;
+    --border: rgba(15,27,45,0.1);
+    --border-strong: rgba(15,27,45,0.2);
+    --shadow: 0 2px 12px rgba(15,27,45,0.08);
+    --shadow-hover: 0 6px 24px rgba(15,27,45,0.14);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* NAVIGATION */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,243,238,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--ink);
+  }
+  .nav-logo {
+    width: 34px; height: 34px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo svg { width: 18px; height: 18px; fill: none; stroke: white; stroke-width: 2; }
+  .brand-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    letter-spacing: -0.3px;
+  }
+  .brand-tag {
+    font-size: 10px; font-weight: 500;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2px;
+    list-style: none;
+  }
+  .nav-links a {
+    display: block;
+    padding: 6px 14px;
+    text-decoration: none;
+    color: var(--ink-mid);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { background: var(--paper-warm); color: var(--ink); }
+  .nav-links a.active { background: var(--accent); color: white; }
+  .nav-cta {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-mid);
+    border: 1px solid var(--border-strong);
+  }
+  .btn-ghost:hover { background: var(--paper-warm); }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--accent-glow); }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 1.2rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 24px; height: 2px;
+    background: var(--teal);
+    border-radius: 2px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-desc {
+    color: var(--ink-mid);
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    max-width: 480px;
+  }
+  .hero-actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 2.5rem;
+  }
+  .hero-stat {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+  }
+  .hero-stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hero-stat-label {
+    font-size: 12px; color: var(--ink-soft);
+    font-weight: 500; letter-spacing: 0.2px;
+  }
+  .hero-visual {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .prisma-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .prisma-title {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+  .prisma-flow {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .prisma-step {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    position: relative;
+  }
+  .prisma-step.identification { background: #e8eef8; }
+  .prisma-step.screening { background: var(--teal-light); }
+  .prisma-step.eligibility { background: var(--amber-light); }
+  .prisma-step.included { background: var(--green-light); }
+  .prisma-step-label { flex: 1; font-weight: 500; }
+  .prisma-step-n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-mid);
+  }
+  .prisma-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .identification .prisma-dot { background: var(--accent); }
+  .screening .prisma-dot { background: var(--teal); }
+  .eligibility .prisma-dot { background: var(--amber); }
+  .included .prisma-dot { background: var(--green); }
+  .prisma-arrow {
+    width: 2px; height: 14px; background: var(--border-strong);
+    margin: 0 auto;
+    position: relative;
+  }
+  .mini-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .mini-card-icon {
+    width: 32px; height: 32px; border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .mini-card-icon svg { width: 16px; height: 16px; }
+  .mini-card-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .mini-card-body { font-size: 12px; color: var(--ink-soft); }
+
+  /* SECTION SHELL */
+  .section {
+    padding: 5rem 2rem;
+  }
+  .section-inner {
+    max-width: 1100px; margin: 0 auto;
+  }
+  .section-label {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--ink-soft);
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.2; letter-spacing: -0.3px;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .section-desc {
+    color: var(--ink-mid); font-size: 16px;
+    max-width: 560px; line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  /* SEARCH BAR */
+  .search-section {
+    padding: 0 2rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .search-container {
+    background: var(--paper-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .search-bar {
+    display: flex; gap: 10px; margin-bottom: 1rem;
+  }
+  .search-input-wrap {
+    flex: 1; position: relative;
+  }
+  .search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--ink-ghost);
+  }
+  .search-icon svg { width: 18px; height: 18px; }
+  input[type="text"] {
+    width: 100%;
+    padding: 11px 14px 11px 42px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 15px; font-family: inherit;
+    background: var(--paper);
+    color: var(--ink);
+    outline: none;
+    transition: border 0.15s;
+  }
+  input[type="text"]:focus { border-color: var(--accent); }
+  input[type="text"]::placeholder { color: var(--ink-ghost); }
+  .search-filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .filter-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+    cursor: pointer; background: var(--paper);
+    color: var(--ink-mid);
+    transition: all 0.15s;
+  }
+  .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-chip.active {
+    background: var(--accent); border-color: var(--accent);
+    color: white;
+  }
+  .filter-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  /* STUDIES GRID */
+  .studies-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px; margin-top: 2rem;
+  }
+  .study-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; flex-direction: column; gap: 10px;
+    text-decoration: none; color: inherit;
+  }
+  .study-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .study-card-header {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+  }
+  .study-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .badge-meta { background: var(--accent-light); color: var(--accent); }
+  .badge-rct { background: var(--teal-light); color: var(--teal); }
+  .badge-obs { background: var(--amber-light); color: var(--amber); }
+  .badge-qual { background: #f0e8f8; color: #6b2fa0; }
+  .badge-cohort { background: var(--green-light); color: var(--green); }
+  .study-card-title {
+    font-size: 14px; font-weight: 600; line-height: 1.45;
+    color: var(--ink);
+  }
+  .study-card-authors {
+    font-size: 12px; color: var(--ink-soft);
+  }
+  .study-card-meta {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 12px; color: var(--ink-soft);
+    border-top: 1px solid var(--border);
+    padding-top: 10px; margin-top: auto;
+  }
+  .study-card-meta span { display: flex; align-items: center; gap: 4px; }
+  .quality-bar {
+    display: flex; gap: 2px;
+  }
+  .quality-pip {
+    width: 6px; height: 12px; border-radius: 2px;
+    background: var(--border-strong);
+  }
+  .quality-pip.filled { background: var(--teal); }
+  .study-abstract {
+    font-size: 13px; color: var(--ink-mid);
+    line-height: 1.6;
+    display: -webkit-box; -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .feature-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    transition: box-shadow 0.2s;
+  }
+  .feature-card:hover { box-shadow: var(--shadow-hover); }
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .feature-icon svg { width: 22px; height: 22px; }
+  .fi-blue { background: var(--accent-light); color: var(--accent); }
+  .fi-teal { background: var(--teal-light); color: var(--teal); }
+  .fi-amber { background: var(--amber-light); color: var(--amber); }
+  .fi-green { background: var(--green-light); color: var(--green); }
+  .fi-red { background: var(--red-light); color: var(--red); }
+  .fi-purple { background: #f0e8f8; color: #6b2fa0; }
+  .feature-title {
+    font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--ink);
+  }
+  .feature-body {
+    font-size: 13px; color: var(--ink-mid); line-height: 1.65;
+  }
+
+  /* PRISMA DIAGRAM */
+  .prisma-full {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .prisma-phases {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .prisma-phase {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .phase-header {
+    padding: 8px 12px; border-radius: var(--radius-sm);
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; text-align: center;
+  }
+  .ph-ident { background: var(--accent-light); color: var(--accent); }
+  .ph-screen { background: var(--teal-light); color: var(--teal); }
+  .ph-elig { background: var(--amber-light); color: var(--amber); }
+  .ph-incl { background: var(--green-light); color: var(--green); }
+  .phase-box {
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 12px; background: var(--paper);
+    font-size: 12px; line-height: 1.5; color: var(--ink-mid);
+  }
+  .phase-box strong { color: var(--ink); display: block; margin-bottom: 4px; }
+  .phase-n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.3rem; font-weight: 500; color: var(--ink);
+    margin-top: 4px;
+  }
+  .phase-excluded {
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px; background: var(--paper);
+    font-size: 11px; color: var(--ink-soft); line-height: 1.5;
+  }
+  .phase-excluded::before {
+    content: '✗ Excluded';
+    display: block; font-weight: 600; color: var(--red);
+    font-size: 10px; letter-spacing: 0.5px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* DATA EXTRACTION TABLE */
+  .data-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead tr { background: var(--paper-warm); }
+  th {
+    padding: 10px 14px;
+    text-align: left; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--ink-soft);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-mid);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--paper-warm); }
+  .td-title { color: var(--ink); font-weight: 500; max-width: 200px; }
+  .rob-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+  .rob-low { background: var(--green); }
+  .rob-mod { background: var(--amber); }
+  .rob-high { background: var(--red); }
+
+  /* QUALITY APPRAISAL */
+  .quality-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .quality-tool {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+  }
+  .quality-tool-name {
+    font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  }
+  .quality-tool-desc {
+    font-size: 12px; color: var(--ink-soft); margin-bottom: 1rem;
+  }
+  .quality-items {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .quality-item {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; font-size: 13px;
+  }
+  .qi-label { color: var(--ink-mid); flex: 1; }
+  .qi-score {
+    display: flex; gap: 3px;
+  }
+  .qi-pip {
+    width: 12px; height: 12px; border-radius: 2px;
+    background: var(--border);
+  }
+  .qi-pip.on { background: var(--accent); }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative; padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 6px; top: 6px; bottom: 6px;
+    width: 2px; background: var(--border-strong);
+    border-radius: 2px;
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+  .timeline-dot {
+    position: absolute; left: -1.75rem; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: white;
+    border: 2px solid var(--border-strong);
+    z-index: 1;
+  }
+  .timeline-dot.done { border-color: var(--teal); background: var(--teal); }
+  .timeline-dot.active { border-color: var(--accent); background: var(--accent); }
+  .timeline-dot.pending { border-color: var(--border-strong); }
+  .timeline-phase {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .timeline-title {
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .timeline-desc {
+    font-size: 13px; color: var(--ink-mid); line-height: 1.6;
+  }
+  .timeline-date {
+    font-size: 11px; color: var(--ink-ghost);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 4px;
+  }
+
+  /* CONTRIBUTE / CTA */
+  .cta-section {
+    background: var(--ink);
+    padding: 5rem 2rem;
+  }
+  .cta-inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .cta-inner h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem; color: white;
+    line-height: 1.25; margin-bottom: 1rem;
+  }
+  .cta-inner h2 em { color: var(--accent-glow); font-style: italic; }
+  .cta-inner p {
+    color: rgba(255,255,255,0.65); margin-bottom: 2rem; font-size: 16px;
+  }
+  .cta-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn-white {
+    background: white; color: var(--ink);
+  }
+  .btn-white:hover { background: var(--paper); }
+  .btn-outline-white {
+    background: transparent; color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+
+  /* FOOTER */
+  footer {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  }
+  .footer-brand-desc {
+    font-size: 13px; color: var(--ink-mid);
+    line-height: 1.7; margin-top: 10px; max-width: 280px;
+  }
+  .footer-col-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a {
+    font-size: 13px; color: var(--ink-mid); text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom {
+    max-width: 1100px; margin: 2rem auto 0;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; color: var(--ink-ghost);
+  }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .tab-btn {
+    padding: 8px 16px; font-size: 14px; font-weight: 500;
+    border: none; background: none; cursor: pointer;
+    color: var(--ink-soft); border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: all 0.15s;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* TOOLTIP BADGE */
+  .help-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--border-strong); color: var(--ink-soft);
+    font-size: 10px; font-weight: 600; cursor: help;
+    vertical-align: middle;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1rem 2rem; }
+    .hero-visual { display: none; }
+    .section { padding: 3rem 1rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .prisma-phases { grid-template-columns: 1fr 1fr; }
+    .quality-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .search-section { padding: 0 1rem 3rem; }
+  }
+
+  /* UTILITY */
+  .mt-sm { margin-top: 0.75rem; }
+  .mt-md { margin-top: 1.5rem; }
+  .mt-lg { margin-top: 2.5rem; }
+  .text-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .tag {
+    display: inline-block; padding: 2px 8px;
+    border-radius: 4px; font-size: 11px; font-weight: 500;
+    background: var(--paper-warm); color: var(--ink-soft);
+  }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* Animations */
+  @media (prefers-reduced-motion: no-preference) {
+    .study-card { transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s; }
+    .feature-card { transition: box-shadow 0.2s; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <span class="brand-name">SystematicaHub</span>
+    <span class="brand-tag">Evidence Synthesis</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#search" class="active">Library</a></li>
+    <li><a href="#prisma">PRISMA</a></li>
+    <li><a href="#extraction">Data Extraction</a></li>
+    <li><a href="#quality">Quality Appraisal</a></li>
+    <li><a href="#protocol">Protocol</a></li>
+    <li><a href="#resources">Resources</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#" class="btn btn-ghost">Sign in</a>
+    <a href="#" class="btn btn-primary">New Review</a>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-eyebrow">Open-Access Platform</span>
+    <h1>Where evidence<br>becomes <em>insight</em></h1>
+    <p class="hero-desc">
+      A structured workspace for systematic reviews, meta-analyses, and evidence maps.
+      Search, screen, extract, and synthesise literature — all in one place.
+    </p>
+    <div class="hero-actions">
+      <a href="#search" class="btn btn-primary" style="font-size:15px; padding:10px 24px;">
+        Browse library →
+      </a>
+      <a href="#protocol" class="btn btn-ghost" style="font-size:15px; padding:10px 24px;">
+        Start a review
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">4,812</div>
+        <div class="hero-stat-label">Studies indexed</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">217</div>
+        <div class="hero-stat-label">Reviews in progress</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">89</div>
+        <div class="hero-stat-label">Completed reviews</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1,340</div>
+        <div class="hero-stat-label">Active researchers</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="prisma-card">
+      <div class="prisma-title">Live PRISMA flow — Intervention X in Type 2 Diabetes</div>
+      <div class="prisma-flow">
+        <div class="prisma-step identification">
+          <div class="prisma-dot"></div>
+          <span class="prisma-step-label">Records identified</span>
+          <span class="prisma-step-n">n = 3,412</span>
+        </div>
+        <div class="prisma-arrow"></div>
+        <div class="prisma-step screening">
+          <div class="prisma-dot"></div>
+          <span class="prisma-step-label">Title/abstract screened</span>
+          <span class="prisma-step-n">n = 2,987</span>
+        </div>
+        <div class="prisma-arrow"></div>
+        <div class="prisma-step eligibility">
+          <div class="prisma-dot"></div>
+          <span class="prisma-step-label">Full-text assessed</span>
+          <span class="prisma-step-n">n = 341</span>
+        </div>
+        <div class="prisma-arrow"></div>
+        <div class="prisma-step included">
+          <div class="prisma-dot"></div>
+          <span class="prisma-step-label">Studies included</span>
+          <span class="prisma-step-n">n = 48</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="mini-card">
+        <div class="mini-card-icon" style="background:var(--teal-light);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <div class="mini-card-title">PROSPERO</div>
+          <div class="mini-card-body">Protocol registered and live</div>
+        </div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-icon" style="background:var(--amber-light);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div>
+          <div class="mini-card-title">3 reviewers</div>
+          <div class="mini-card-body">Dual screening active</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SEARCH ═══════ -->
+<div class="search-section" id="search">
+  <div class="search-container">
+    <div class="search-bar">
+      <div class="search-input-wrap">
+        <span class="search-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </span>
+        <input type="text" placeholder="Search by title, author, keyword, DOI, or MeSH term…" value="" />
+      </div>
+      <button class="btn btn-primary" style="padding:10px 22px;">Search</button>
+      <button class="btn btn-ghost">Advanced</button>
+    </div>
+    <div class="search-filters">
+      <span style="font-size:12px; color:var(--ink-soft); align-self:center; margin-right:4px;">Filter:</span>
+      <button class="filter-chip active"><span class="filter-dot" style="background:var(--accent);"></span> All</button>
+      <button class="filter-chip"><span class="filter-dot" style="background:var(--teal);"></span> RCT</button>
+      <button class="filter-chip"><span class="filter-dot" style="background:var(--amber);"></span> Observational</button>
+      <button class="filter-chip"><span class="filter-dot" style="background:#6b2fa0;"></span> Qualitative</button>
+      <button class="filter-chip"><span class="filter-dot" style="background:var(--green);"></span> Cohort</button>
+      <button class="filter-chip"><span class="filter-dot" style="background:var(--red);"></span> Case–Control</button>
+      <button class="filter-chip" style="margin-left:auto;">2020–2025 ▾</button>
+    </div>
+  </div>
+
+  <div class="studies-grid">
+    <!-- Card 1 -->
+    <a class="study-card" href="#" onclick="return false;">
+      <div class="study-card-header">
+        <div class="study-card-title">Effect of dietary fibre supplementation on HbA1c in adults with type 2 diabetes: a systematic review</div>
+        <span class="study-badge badge-meta">Meta-analysis</span>
+      </div>
+      <div class="study-card-authors">Reynolds AN, Akerman AP, Mann J · <em>Lancet</em> 2023</div>
+      <div class="study-abstract">
+        Pooled analysis of 27 RCTs (n = 3,144) showed dietary fibre supplementation significantly reduced HbA1c (MD −0.41%, 95% CI −0.57 to −0.25) without significant heterogeneity (I² = 38%).
+      </div>
+      <div class="study-card-meta">
+        <span>Quality:&nbsp;
+          <span class="quality-bar">
+            <span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip"></span>
+          </span>
+        </span>
+        <span>27 studies</span>
+        <span>n = 3,144</span>
+      </div>
+    </a>
+    <!-- Card 2 -->
+    <a class="study-card" href="#" onclick="return false;">
+      <div class="study-card-header">
+        <div class="study-card-title">Exercise interventions for depression in older adults: a network meta-analysis of 58 trials</div>
+        <span class="study-badge badge-meta">Meta-analysis</span>
+      </div>
+      <div class="study-card-authors">Singh B, Olds T, Curtis R · <em>BMJ</em> 2023</div>
+      <div class="study-abstract">
+        Resistance training, yoga, and aerobic exercise all showed large effects on depressive symptoms. Network analysis suggests combined modalities may be most efficacious (SMD −1.04, 95% CI −1.26 to −0.82).
+      </div>
+      <div class="study-card-meta">
+        <span>Quality:&nbsp;
+          <span class="quality-bar">
+            <span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span>
+          </span>
+        </span>
+        <span>58 studies</span>
+        <span>n = 8,210</span>
+      </div>
+    </a>
+    <!-- Card 3 -->
+    <a class="study-card" href="#" onclick="return false;">
+      <div class="study-card-header">
+        <div class="study-card-title">Telemedicine for management of chronic pain: systematic review and qualitative synthesis</div>
+        <span class="study-badge badge-qual">Qualitative</span>
+      </div>
+      <div class="study-card-authors">Turk DC, Wilson HD, Cahana A · <em>Pain</em> 2023</div>
+      <div class="study-abstract">
+        Thematic synthesis of 14 qualitative studies identified patient autonomy, access to care, and therapeutic alliance as central themes. Barriers included technological literacy and connectivity in rural populations.
+      </div>
+      <div class="study-card-meta">
+        <span>Quality:&nbsp;
+          <span class="quality-bar">
+            <span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip"></span><span class="quality-pip"></span>
+          </span>
+        </span>
+        <span>14 studies</span>
+        <span>Mixed methods</span>
+      </div>
+    </a>
+    <!-- Card 4 -->
+    <a class="study-card" href="#" onclick="return false;">
+      <div class="study-card-header">
+        <div class="study-card-title">Antibiotic prophylaxis to prevent surgical site infection: Cochrane systematic review update</div>
+        <span class="study-badge badge-rct">RCT</span>
+      </div>
+      <div class="study-card-authors">Webster J, Osborne S · <em>Cochrane Database</em> 2022</div>
+      <div class="study-abstract">
+        Updated Cochrane review of 263 RCTs concludes antibiotic prophylaxis reduces SSI risk (RR 0.56, 95% CI 0.52–0.60). Evidence is high certainty for colorectal procedures, moderate for orthopaedic.
+      </div>
+      <div class="study-card-meta">
+        <span>Quality:&nbsp;
+          <span class="quality-bar">
+            <span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span>
+          </span>
+        </span>
+        <span>263 studies</span>
+        <span>n = 48,701</span>
+      </div>
+    </a>
+    <!-- Card 5 -->
+    <a class="study-card" href="#" onclick="return false;">
+      <div class="study-card-header">
+        <div class="study-card-title">Prevalence of burnout among physicians: a systematic review and meta-analysis update 2010–2024</div>
+        <span class="study-badge badge-obs">Observational</span>
+      </div>
+      <div class="study-card-authors">Rotenstein LS, Torre M, Ramos MA · <em>JAMA</em> 2024</div>
+      <div class="study-abstract">
+        Pooled prevalence of overall burnout was 44.2% (95% CI 41.6%–46.9%) among 171,655 physicians across 47 countries, with emergency medicine, ICU, and oncology showing highest rates.
+      </div>
+      <div class="study-card-meta">
+        <span>Quality:&nbsp;
+          <span class="quality-bar">
+            <span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip"></span>
+          </span>
+        </span>
+        <span>182 studies</span>
+        <span>n = 171,655</span>
+      </div>
+    </a>
+    <!-- Card 6 -->
+    <a class="study-card" href="#" onclick="return false;">
+      <div class="study-card-header">
+        <div class="study-card-title">Mindfulness-based interventions for anxiety in children and adolescents: a systematic review</div>
+        <span class="study-badge badge-cohort">Cohort</span>
+      </div>
+      <div class="study-card-authors">Dunning DL, Griffiths K, Kuyken W · <em>Psychol Med</em> 2022</div>
+      <div class="study-abstract">
+        Among 33 studies (n = 3,666 young people aged 6–18), mindfulness interventions showed moderate effects on anxiety symptoms (g = 0.51, 95% CI 0.38–0.64). School-based programmes showed the most consistent effects.
+      </div>
+      <div class="study-card-meta">
+        <span>Quality:&nbsp;
+          <span class="quality-bar">
+            <span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip filled"></span><span class="quality-pip"></span><span class="quality-pip"></span>
+          </span>
+        </span>
+        <span>33 studies</span>
+        <span>n = 3,666</span>
+      </div>
+    </a>
+  </div>
+  <div style="text-align:center; margin-top:2rem;">
+    <button class="btn btn-ghost" style="padding:10px 28px;">Load 24 more studies</button>
+  </div>
+</div>
+
+<!-- ═══════ FEATURES ═══════ -->
+<section class="section" style="background: var(--paper-warm);">
+  <div class="section-inner">
+    <span class="section-label">Platform capabilities</span>
+    <h2 class="section-title">Every stage of your review, covered</h2>
+    <p class="section-desc">From protocol registration to forest plots, SystematicaHub provides structured tools that align with PRISMA 2020, Cochrane Handbook, and GRADE guidelines.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon fi-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"/></svg>
+        </div>
+        <div class="feature-title">Multi-database search</div>
+        <div class="feature-body">Connect to PubMed, Embase, CENTRAL, PsycINFO, and CINAHL. Deduplicate records automatically and import via RIS or BibTeX.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        </div>
+        <div class="feature-title">Dual-blind screening</div>
+        <div class="feature-body">Assign screeners, resolve conflicts with a third reviewer, and track inter-rater reliability (Cohen's κ) at every stage of title, abstract, and full-text review.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <div class="feature-title">Structured data extraction</div>
+        <div class="feature-body">Build custom extraction forms with field validation. Export to Excel, CSV, or directly to RevMan. Supports PICO, PICOS, and SPIDER frameworks.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <div class="feature-title">Risk of bias assessment</div>
+        <div class="feature-body">Built-in tools for RoB 2.0, ROBINS-I, Newcastle–Ottawa Scale, CASP checklists, and GRADE evidence profiling — with traffic-light summary tables.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="feature-title">Meta-analysis & forest plots</div>
+        <div class="feature-body">Fixed and random effects models, subgroup analysis, sensitivity analysis, and publication bias tests (Egger, Begg, funnel plot). Export publication-ready figures.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div class="feature-title">Team collaboration</div>
+        <div class="feature-body">Invite co-reviewers, assign roles, leave inline comments, and track review progress in real time — with full audit trail and version history.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PRISMA DIAGRAM ═══════ -->
+<section class="section" id="prisma">
+  <div class="section-inner">
+    <span class="section-label">PRISMA 2020</span>
+    <h2 class="section-title">Visual flow diagram builder</h2>
+    <p class="section-desc">Enter your screening numbers and the PRISMA flow generates automatically — ready to paste into your manuscript or export as SVG/PNG.</p>
+
+    <div class="prisma-full">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem;">
+        <div>
+          <div style="font-weight:600; font-size:15px;">PRISMA flow — Intervention X in Type 2 Diabetes</div>
+          <div style="font-size:12px; color:var(--ink-soft);">Last updated 12 Jun 2025 · Protocol: CRD42024401821</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost" style="font-size:13px;">Edit numbers</button>
+          <button class="btn btn-primary" style="font-size:13px;">Export SVG</button>
+        </div>
+      </div>
+
+      <div class="prisma-phases">
+        <!-- Identification -->
+        <div class="prisma-phase">
+          <div class="phase-header ph-ident">Identification</div>
+          <div class="phase-box">
+            <strong>Records via databases</strong>
+            PubMed, Embase, CENTRAL, CINAHL, PsycINFO
+            <div class="phase-n">n = 3,119</div>
+          </div>
+          <div class="phase-box">
+            <strong>Records via other sources</strong>
+            Registers, grey literature, citation searching
+            <div class="phase-n">n = 293</div>
+          </div>
+          <div class="phase-box" style="border-color:var(--accent); background:var(--accent-light);">
+            <strong>Total records</strong>
+            After deduplication removed (n = 425)
+            <div class="phase-n" style="color:var(--accent);">n = 2,987</div>
+          </div>
+        </div>
+
+        <!-- Screening -->
+        <div class="prisma-phase">
+          <div class="phase-header ph-screen">Screening</div>
+          <div class="phase-box">
+            <strong>Title/abstract screened</strong>
+            Dual-blind review; Cohen's κ = 0.81
+            <div class="phase-n">n = 2,987</div>
+          </div>
+          <div class="phase-excluded">
+            Not relevant to PICO<br>
+            Wrong study type<br>
+            <strong style="color:var(--red); font-size:13px;">n = 2,646</strong>
+          </div>
+          <div class="phase-box" style="border-color:var(--teal); background:var(--teal-light);">
+            <strong>Reports sought for retrieval</strong>
+            <div class="phase-n" style="color:var(--teal);">n = 341</div>
+          </div>
+        </div>
+
+        <!-- Eligibility -->
+        <div class="prisma-phase">
+          <div class="phase-header ph-elig">Eligibility</div>
+          <div class="phase-box">
+            <strong>Full-texts assessed</strong>
+            <div class="phase-n">n = 341</div>
+          </div>
+          <div class="phase-excluded">
+            Not RCT (n = 112)<br>
+            Wrong population (n = 79)<br>
+            Wrong outcome (n = 64)<br>
+            Duplicate data (n = 38)<br>
+            <strong style="color:var(--red); font-size:13px;">n = 293</strong>
+          </div>
+          <div class="phase-box" style="border-color:var(--amber); background:var(--amber-light);">
+            <strong>Reports assessed for eligibility</strong>
+            <div class="phase-n" style="color:var(--amber);">n = 48</div>
+          </div>
+        </div>
+
+        <!-- Included -->
+        <div class="prisma-phase">
+          <div class="phase-header ph-incl">Included</div>
+          <div class="phase-box" style="border-color:var(--green); background:var(--green-light);">
+            <strong>Studies included in review</strong>
+            All met PICO criteria; RoB assessed with RoB 2.0
+            <div class="phase-n" style="color:var(--green);">n = 48</div>
+          </div>
+          <div class="phase-box">
+            <strong>Reports of included studies</strong>
+            Some studies had multiple publications
+            <div class="phase-n">n = 53</div>
+          </div>
+          <div class="phase-box" style="border-color:var(--green); background:var(--green-light);">
+            <strong>Studies in meta-analysis</strong>
+            Excluding 6 qualitative substudies
+            <div class="phase-n" style="color:var(--green);">n = 42</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ DATA EXTRACTION ═══════ -->
+<section class="section" style="background: var(--paper-warm);" id="extraction">
+  <div class="section-inner">
+    <span class="section-label">Data extraction</span>
+    <h2 class="section-title">Structured extraction table</h2>
+    <p class="section-desc">Extract data from included studies in a standardised form. All fields map to RevMan XML format for seamless export.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('extraction-tab')">Extracted data</button>
+      <button class="tab-btn" onclick="showTab('form-tab')">Extraction form</button>
+      <button class="tab-btn" onclick="showTab('export-tab')">Export options</button>
+    </div>
+
+    <div id="extraction-tab" class="tab-panel active">
+      <div class="data-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Study ID</th>
+              <th>First author, year</th>
+              <th>Country</th>
+              <th>Design</th>
+              <th>Population</th>
+              <th>n</th>
+              <th>Intervention</th>
+              <th>Comparator</th>
+              <th>Outcome</th>
+              <th>Effect (95% CI)</th>
+              <th>RoB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-mono">STD-001</td>
+              <td class="td-title">Reynolds 2023</td>
+              <td>NZ/AU</td>
+              <td><span class="study-badge badge-rct">RCT</span></td>
+              <td>T2DM adults ≥18y</td>
+              <td class="text-mono">312</td>
+              <td>Fibre 15g/d</td>
+              <td>Placebo</td>
+              <td>HbA1c (%)</td>
+              <td class="text-mono">−0.41 (−0.57, −0.25)</td>
+              <td><span class="rob-dot rob-low"></span>Low</td>
+            </tr>
+            <tr>
+              <td class="text-mono">STD-002</td>
+              <td class="td-title">Singh 2023</td>
+              <td>UK</td>
+              <td><span class="study-badge badge-rct">RCT</span></td>
+              <td>Depression ≥18y</td>
+              <td class="text-mono">8,210</td>
+              <td>Exercise (varied)</td>
+              <td>Usual care</td>
+              <td>PHQ-9 score</td>
+              <td class="text-mono">SMD −1.04 (−1.26, −0.82)</td>
+              <td><span class="rob-dot rob-mod"></span>Mod</td>
+            </tr>
+            <tr>
+              <td class="text-mono">STD-003</td>
+              <td class="td-title">Webster 2022</td>
+              <td>Multi</td>
+              <td><span class="study-badge badge-rct">RCT</span></td>
+              <td>Surgical adult</td>
+              <td class="text-mono">48,701</td>
+              <td>IV antibiotics</td>
+              <td>Placebo</td>
+              <td>SSI within 30d</td>
+              <td class="text-mono">RR 0.56 (0.52, 0.60)</td>
+              <td><span class="rob-dot rob-low"></span>Low</td>
+            </tr>
+            <tr>
+              <td class="text-mono">STD-004</td>
+              <td class="td-title">Rotenstein 2024</td>
+              <td>Multi</td>
+              <td><span class="study-badge badge-obs">Obs</span></td>
+              <td>Physicians</td>
+              <td class="text-mono">171,655</td>
+              <td>—</td>
+              <td>—</td>
+              <td>Burnout (MBI)</td>
+              <td class="text-mono">Prev 44.2% (41.6, 46.9)</td>
+              <td><span class="rob-dot rob-mod"></span>Mod</td>
+            </tr>
+            <tr>
+              <td class="text-mono">STD-005</td>
+              <td class="td-title">Dunning 2022</td>
+              <td>UK</td>
+              <td><span class="study-badge badge-cohort">Cohort</span></td>
+              <td>Youth 6–18y</td>
+              <td class="text-mono">3,666</td>
+              <td>MBSR/MBCT</td>
+              <td>No treatment</td>
+              <td>RCADS anxiety</td>
+              <td class="text-mono">g 0.51 (0.38, 0.64)</td>
+              <td><span class="rob-dot rob-mod"></span>Mod</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:1rem; display:flex; gap:8px;">
+        <button class="btn btn-ghost" style="font-size:13px;">+ Add study</button>
+        <button class="btn btn-ghost" style="font-size:13px;">Import RIS</button>
+        <button class="btn btn-primary" style="font-size:13px; margin-left:auto;">Export to Excel</button>
+      </div>
+    </div>
+
+    <div id="form-tab" class="tab-panel">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:1rem 0;">
+        <div>
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Study ID</label>
+          <input type="text" placeholder="e.g. STD-006" style="width:100%;"/>
+        </div>
+        <div>
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">First author &amp; year</label>
+          <input type="text" placeholder="e.g. Smith 2024" style="width:100%;"/>
+        </div>
+        <div>
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Study design</label>
+          <input type="text" placeholder="RCT, cohort, case-control…" style="width:100%;"/>
+        </div>
+        <div>
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Sample size (n)</label>
+          <input type="text" placeholder="Total participants" style="width:100%;"/>
+        </div>
+        <div style="grid-column:1/-1;">
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Intervention description</label>
+          <input type="text" placeholder="Describe the intervention in detail" style="width:100%;"/>
+        </div>
+        <div style="grid-column:1/-1; margin-top:8px;">
+          <button class="btn btn-primary">Save extraction</button>
+          <button class="btn btn-ghost" style="margin-left:8px;">Clear form</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="export-tab" class="tab-panel">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:1rem 0;">
+        <div class="feature-card" style="text-align:center; cursor:pointer;">
+          <div class="feature-icon fi-green" style="margin:0 auto 1rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div class="feature-title">Excel / CSV</div>
+          <div class="feature-body">Standard spreadsheet format for further analysis in R or Stata.</div>
+        </div>
+        <div class="feature-card" style="text-align:center; cursor:pointer;">
+          <div class="feature-icon fi-blue" style="margin:0 auto 1rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div class="feature-title">RevMan XML</div>
+          <div class="feature-body">Import directly into Cochrane RevMan 5 or RevMan Web.</div>
+        </div>
+        <div class="feature-card" style="text-align:center; cursor:pointer;">
+          <div class="feature-icon fi-purple" style="margin:0 auto 1rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="feature-title">RIS / BibTeX</div>
+          <div class="feature-body">Reference manager compatible format for Zotero, Mendeley, or EndNote.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ QUALITY APPRAISAL ═══════ -->
+<section class="section" id="quality">
+  <div class="section-inner">
+    <span class="section-label">Quality appraisal</span>
+    <h2 class="section-title">Risk of bias tools, built in</h2>
+    <p class="section-desc">Complete structured appraisals for RCTs, observational studies, and qualitative research. Summary judgements are calculated automatically.</p>
+
+    <div class="quality-grid">
+      <div class="quality-tool">
+        <div class="quality-tool-name">Cochrane RoB 2.0 — Reynolds 2023</div>
+        <div class="quality-tool-desc">Randomisation process, deviations, missing data, measurement, reporting</div>
+        <div class="quality-items">
+          <div class="quality-item">
+            <span class="qi-label">D1 · Randomisation process</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">● Low</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">D2 · Deviations from intended intervention</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">● Low</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">D3 · Missing outcome data</span>
+            <span style="font-size:12px; font-weight:600; color:var(--amber);">◐ Some concern</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">D4 · Measurement of the outcome</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">● Low</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">D5 · Selective reporting</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">● Low</span>
+          </div>
+          <div class="quality-item" style="border-top:1px solid var(--border); padding-top:8px; margin-top:4px;">
+            <span class="qi-label" style="font-weight:600; color:var(--ink);">Overall judgement</span>
+            <span style="font-size:12px; font-weight:700; color:var(--teal);">✓ Low risk</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quality-tool">
+        <div class="quality-tool-name">GRADE evidence profile</div>
+        <div class="quality-tool-desc">Certainty of evidence for primary outcome (HbA1c)</div>
+        <div class="quality-items">
+          <div class="quality-item">
+            <span class="qi-label">Risk of bias</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Not serious</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Inconsistency (I² = 38%)</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Not serious</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Indirectness</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Not serious</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Imprecision (wide CI)</span>
+            <span style="font-size:12px; font-weight:600; color:var(--amber);">Serious −1</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Publication bias</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Undetected</span>
+          </div>
+          <div class="quality-item" style="border-top:1px solid var(--border); padding-top:8px; margin-top:4px;">
+            <span class="qi-label" style="font-weight:600; color:var(--ink);">Certainty of evidence</span>
+            <span style="font-size:12px; font-weight:700; color:var(--amber);">⊕⊕⊕⊝ Moderate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quality-tool">
+        <div class="quality-tool-name">Newcastle–Ottawa Scale — Rotenstein 2024</div>
+        <div class="quality-tool-desc">Cohort study: selection, comparability, outcome assessment</div>
+        <div class="quality-items">
+          <div class="quality-item">
+            <span class="qi-label">Selection (max ★★★★)</span>
+            <span class="qi-score"><span class="qi-pip on"></span><span class="qi-pip on"></span><span class="qi-pip on"></span><span class="qi-pip on"></span></span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Comparability (max ★★)</span>
+            <span class="qi-score"><span class="qi-pip on"></span><span class="qi-pip on"></span></span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Outcome (max ★★★)</span>
+            <span class="qi-score"><span class="qi-pip on"></span><span class="qi-pip on"></span><span class="qi-pip"></span></span>
+          </div>
+          <div class="quality-item" style="border-top:1px solid var(--border); padding-top:8px; margin-top:4px;">
+            <span class="qi-label" style="font-weight:600; color:var(--ink);">Total score</span>
+            <span style="font-size:12px; font-weight:700; color:var(--teal);">8/9 ★ — Good quality</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quality-tool">
+        <div class="quality-tool-name">CASP checklist — Turk 2023 (Qualitative)</div>
+        <div class="quality-tool-desc">10-item checklist for qualitative research</div>
+        <div class="quality-items">
+          <div class="quality-item">
+            <span class="qi-label">Clear aims and rigorous design</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Yes</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Recruitment strategy appropriate</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Yes</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Data collection sufficient</span>
+            <span style="font-size:12px; font-weight:600; color:var(--amber);">Can't tell</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Relationship considered</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Yes</span>
+          </div>
+          <div class="quality-item">
+            <span class="qi-label">Ethics considered</span>
+            <span style="font-size:12px; font-weight:600; color:var(--green);">Yes</span>
+          </div>
+          <div class="quality-item" style="border-top:1px solid var(--border); padding-top:8px; margin-top:4px;">
+            <span class="qi-label" style="font-weight:600; color:var(--ink);">Overall assessment</span>
+            <span style="font-size:12px; font-weight:700; color:var(--teal);">8/10 — Adequate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROTOCOL / TIMELINE ═══════ -->
+<section class="section" style="background: var(--paper-warm);" id="protocol">
+  <div class="section-inner">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start;">
+      <div>
+        <span class="section-label">Review protocol</span>
+        <h2 class="section-title">Track your review milestones</h2>
+        <p class="section-desc">Log protocol amendments, document decisions, and maintain a full audit trail for peer reviewers and journal editors.</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot done"></div>
+            <div class="timeline-phase">Phase 1</div>
+            <div class="timeline-title">Protocol development</div>
+            <div class="timeline-desc">PICO question defined, eligibility criteria set, search strategy peer-reviewed by information specialist.</div>
+            <div class="timeline-date">Completed 2024-09-01</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot done"></div>
+            <div class="timeline-phase">Phase 2</div>
+            <div class="timeline-title">PROSPERO registration</div>
+            <div class="timeline-desc">Protocol registered on PROSPERO before screening commenced. Registration: CRD42024401821.</div>
+            <div class="timeline-date">Completed 2024-09-15</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot done"></div>
+            <div class="timeline-phase">Phase 3</div>
+            <div class="timeline-title">Database searches</div>
+            <div class="timeline-desc">Searches run across 5 databases. Records imported, deduplicated (n = 425 removed). Total unique: 2,987.</div>
+            <div class="timeline-date">Completed 2024-11-20</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-phase">Phase 4 — In progress</div>
+            <div class="timeline-title">Title/abstract screening</div>
+            <div class="timeline-desc">Dual-blind screening by two independent reviewers. κ = 0.81. Conflicts resolved by third reviewer.</div>
+            <div class="timeline-date">Target: 2025-02-28</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot pending"></div>
+            <div class="timeline-phase">Phase 5</div>
+            <div class="timeline-title">Full-text review &amp; extraction</div>
+            <div class="timeline-desc">Eligible studies assessed for inclusion. Data extracted using structured form. RoB assessed with RoB 2.0.</div>
+            <div class="timeline-date">Target: 2025-05-30</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot pending"></div>
+            <div class="timeline-phase">Phase 6</div>
+            <div class="timeline-title">Synthesis &amp; write-up</div>
+            <div class="timeline-desc">Meta-analysis, GRADE assessment, and manuscript preparation. Submission to systematic review journal.</div>
+            <div class="timeline-date">Target: 2025-09-30</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--paper-card); border:1px solid var(--border); border-radius:14px; padding:1.8rem; box-shadow:var(--shadow);">
+          <div style="font-size:15px; font-weight:600; margin-bottom:1.2rem; color:var(--ink);">Register or import a review</div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Review title</label>
+              <input type="text" placeholder="Full title of your systematic review" style="width:100%;"/>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">PICO question</label>
+              <input type="text" placeholder="e.g. In adults with T2DM, does dietary fibre…" style="width:100%;"/>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">PROSPERO / INPLASY ID</label>
+              <input type="text" placeholder="CRD42024…" style="width:100%;"/>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div>
+                <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Review type</label>
+                <input type="text" placeholder="Systematic / Scoping…" style="width:100%;"/>
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Lead reviewer</label>
+                <input type="text" placeholder="Name" style="width:100%;"/>
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width:100%; justify-content:center; padding:11px; margin-top:4px;">Create review project</button>
+            <button class="btn btn-ghost" style="width:100%; justify-content:center; padding:11px;">Import from PROSPERO</button>
+          </div>
+        </div>
+
+        <div style="background:var(--accent-light); border:1px solid rgba(42,82,152,0.2); border-radius:var(--radius); padding:1.2rem 1.4rem; margin-top:16px;">
+          <div style="font-size:13px; font-weight:600; color:var(--accent); margin-bottom:6px;">Recommended resources</div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:6px;">
+            <li><a href="#" style="font-size:13px; color:var(--accent); text-decoration:none;">→ PRISMA 2020 checklist (PDF)</a></li>
+            <li><a href="#" style="font-size:13px; color:var(--accent); text-decoration:none;">→ Cochrane Handbook for Systematic Reviews</a></li>
+            <li><a href="#" style="font-size:13px; color:var(--accent); text-decoration:none;">→ GRADE handbook</a></li>
+            <li><a href="#" style="font-size:13px; color:var(--accent); text-decoration:none;">→ PROSPERO registration guide</a></li>
+            <li><a href="#" style="font-size:13px; color:var(--accent); text-decoration:none;">→ RoB 2.0 tool documentation</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Start your next review with <em>rigour</em></h2>
+    <p>SystematicaHub is free and open-access. No account required to browse the library — register to manage your own reviews.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn btn-white" style="padding:12px 28px; font-size:15px;">Create free account</a>
+      <a href="#search" class="btn btn-outline-white" style="padding:12px 28px; font-size:15px;">Browse literature →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer id="resources">
+  <div class="footer-inner">
+    <div>
+      <div class="nav-brand" style="margin-bottom:0.5rem; text-decoration:none; display:flex; align-items:center; gap:10px;">
+        <div class="nav-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="brand-name">SystematicaHub</span>
+      </div>
+      <p class="footer-brand-desc">An open-access platform for systematic reviews and evidence synthesis. Built for researchers, by researchers — aligned with PRISMA 2020 and Cochrane standards.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="#search">Literature library</a></li>
+        <li><a href="#prisma">PRISMA builder</a></li>
+        <li><a href="#extraction">Data extraction</a></li>
+        <li><a href="#quality">Quality appraisal</a></li>
+        <li><a href="#protocol">Review protocol</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Resources</div>
+      <ul class="footer-links">
+        <li><a href="#">Cochrane Handbook</a></li>
+        <li><a href="#">PRISMA 2020 checklist</a></li>
+        <li><a href="#">GRADE handbook</a></li>
+        <li><a href="#">PROSPERO guide</a></li>
+        <li><a href="#">RoB 2.0 tool</a></li>
+        <li><a href="#">Meta-analysis guide</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Community</div>
+      <ul class="footer-links">
+        <li><a href="#">Discussion forum</a></li>
+        <li><a href="#">Submit a review</a></li>
+        <li><a href="#">Training &amp; workshops</a></li>
+        <li><a href="#">API access</a></li>
+        <li><a href="#">Contact us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SystematicaHub · Free to use · Not affiliated with Cochrane or Elsevier</span>
+    <span style="display:flex; gap:16px;">
+      <a href="#" style="color:var(--ink-ghost); text-decoration:none;">Privacy</a>
+      <a href="#" style="color:var(--ink-ghost); text-decoration:none;">Terms</a>
+      <a href="#" style="color:var(--ink-ghost); text-decoration:none;">Accessibility</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        if (!c.textContent.trim().includes('2020')) c.classList.remove('active');
+      });
+      this.classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.study-card, .feature-card, .quality-tool').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
